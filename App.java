@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class App {
     final int spaceBetweenFigurs = (int)((Math.random() * (15 - 5)) + 5);
@@ -48,20 +51,25 @@ public class App {
         final int spaceBetweenFigurs = (int)((Math.random() * (15 - 5)) + 5);
         final int totalWidthPanel = spaceBetweenFigurs + c1.getWidth() + spaceBetweenFigurs + c2.getWidth() + spaceBetweenFigurs+ c3.getWidth() + spaceBetweenFigurs+ c4.getWidth() + spaceBetweenFigurs+ c5.getWidth() + spaceBetweenFigurs+ p1.getWidth() + spaceBetweenFigurs+ p2.getWidth() + spaceBetweenFigurs+ p3.getWidth() + spaceBetweenFigurs+ p4.getWidth() + spaceBetweenFigurs+ p5.getWidth() + spaceBetweenFigurs;
         final int maxHeightPanel = figuren.getLast().getHeight();
-        final JFrame frame;
-        final JPanel panel;
+        JFrame frame;
+        JPanel panel;
         frame = new JFrame("GUI");
         frame.setSize(totalWidthPanel, maxHeightPanel);
-        panel = new JPanel();
+        panel = new JPanel() {
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                int offsetLeft = spaceBetweenFigurs;
+                for(Figur f : figuren) {
+                    f.paintOnGraphics(g, offsetLeft, maxHeightPanel);
+                    offsetLeft += f.getWidth() + spaceBetweenFigurs;
+                }
+            }
+        };
+
         panel.setBackground(new Color(0, 0, 0));
-                panel.paintComponents(for(Figur f : figuren) {
-            int i = 0;
-            f.paintOnGraphics(g, i, maxHeightPanel);
-            i = i+f.getWidth()+spaceBetweenFigurs;
-        });
         frame.add(panel);
-
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

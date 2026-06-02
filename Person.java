@@ -1,4 +1,7 @@
+import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
+
 
 public class Person extends Figur{
     private final int mainBodyWidth = 10;
@@ -19,8 +22,24 @@ public class Person extends Figur{
         return (armsWidth*2+mainBodyWidth)*factor;
     }
 
-    void paintOnGraphics(Graphics g) {
-
+    public void paintOnGraphics(Graphics g) {
+        int offsetTop = maxHeightPanel - this.getHeight();
+        Random rand = new Random();
+        float r = rand.nextFloat();
+        float gg = rand.nextFloat();
+        float b = rand.nextFloat();
+        Color randomColor = new Color(r, gg, b);
+        g.setColor(randomColor);
+        g.fillOval(offsetLeft+(mainBodyWidth*factor-headRadius*factor)/2, offsetTop, headRadius*factor, headRadius*factor);
+        offsetTop += headRadius*factor;
+        g.fillRect(offsetLeft+(mainBodyWidth*factor-headRadius*factor)/2+factor, offsetTop-factor, neckWidth*factor, neckHeight*factor);
+        offsetTop += neckHeight*factor-factor;
+        g.fillRect(offsetLeft-armsWidth*factor, offsetTop, armsWidth*factor, armsHeight*factor);
+        g.fillRect(offsetLeft+mainBodyWidth*factor, offsetTop, armsWidth*factor, armsHeight*factor);
+        g.fillRect(offsetLeft, offsetTop, mainBodyWidth*factor, mainBodyHeight*factor);
+        offsetTop += mainBodyHeight*factor;
+        g.fillRect(offsetLeft, offsetTop, legsWidth*factor, legsHeight*factor);
+        g.fillRect(offsetLeft+(mainBodyWidth*factor-legsWidth*factor), offsetTop, legsWidth*factor, legsHeight*factor);
     }
     
 }
